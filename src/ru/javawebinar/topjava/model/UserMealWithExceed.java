@@ -40,7 +40,6 @@ public class UserMealWithExceed {
 
     @Override
     public String toString() {
-        String s = getDateTime()+" " + getDescription()+ " " + getCalories();
-        return s;
+        return getDateTime()+" " + getDescription()+ " " + getCalories() + " " + exceed;
     }
 }
