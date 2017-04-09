@@ -2,3 +2,4 @@
 *.iml
 .idea/
 target/
+/1_6_logging.patch
