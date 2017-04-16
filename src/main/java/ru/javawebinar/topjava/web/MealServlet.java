@@ -3,12 +3,16 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.javawebinar.topjava.model.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.util.List;
 
 
 /**
@@ -19,7 +23,17 @@ public class MealServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOG.debug("Sending redirect to meals.jsp");
-        resp.sendRedirect("meals.jsp");
+        List<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(MealsUtil.getMeals(), LocalTime.MIN,LocalTime.MAX,2000);
+        req.setAttribute("mealWithExceeds" , mealWithExceeds);
+        LOG.debug("forward to meals.jsp");
+        req.getRequestDispatcher("meals.jsp").forward(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(MealsUtil.getMeals(), LocalTime.MIN,LocalTime.MAX,2000);
+        req.setAttribute("mealWithExceeds" , mealWithExceeds);
+        LOG.debug("forward to meals.jsp");
+        req.getRequestDispatcher("meals.jsp").forward(req,resp);
     }
 }
